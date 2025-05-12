@@ -1,0 +1,25 @@
+# Ignore Terraform sensitive files
+*.tfvars
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Ignore local settings for .NET
+appsettings.Development.json
+appsettings.Local.json
+appsettings.json
+
+# Ignore user-specific or OS files
+.vscode/
+*.user
+*.suo
+*.log
+*.db
+bin/
+obj/
+
+# Ignore secrets files (if any)
+.env
+
+# Ignore guides folder (too much info)
+guides/

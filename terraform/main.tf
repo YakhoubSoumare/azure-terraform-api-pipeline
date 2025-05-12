@@ -73,3 +73,26 @@ resource "azurerm_mssql_database" "db"{
 
   tags = {}
 }
+
+resource "azurerm_service_plan" "asp" {
+  name                = "asp-${var.environment}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  sku_name = var.app_service_plan_sku_size
+
+  os_type             = "Windows"  # Defines it as Windows-based
+}
+
+resource "azurerm_app_service" "web_app" {
+  name                = "taskmanagement-api-${var.environment}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  app_service_plan_id = azurerm_service_plan.asp.id
+
+  app_settings = {
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
+  }
+
+  https_only = true
+}

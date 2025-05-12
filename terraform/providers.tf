@@ -3,7 +3,7 @@ terraform {
     required_providers {
         azurerm = {
             source  = "hashicorp/azurerm"
-            version = "~> 3.0.2"
+            version = "~> 3.80.0"
         }
     }
     
@@ -14,6 +14,7 @@ terraform {
 # Configure the Azure provider
 provider "azurerm" {
     features {} # Enables access to Azure resources
+    skip_provider_registration = true       # Needed for student subscription to avoid blocked provider errors
 }
 
 # required_providers ensures we are using the azurerm provider for managing Azure resources.

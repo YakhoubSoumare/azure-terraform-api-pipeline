@@ -1,0 +1,51 @@
+name: Build and Deploy .NET to Azure Web App
+
+# Trigger workflow on push to main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest  # Use latest Ubuntu runner
+
+    steps:
+    # Checkout the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Set up the required .NET SDK version
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    # Restore NuGet dependencies
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Build the project in Release mode
+    - name: Build
+      run: dotnet build --configuration Release
+
+    # Optional: Run unit tests (can be enabled later)
+    # - name: Run tests
+    #   run: dotnet test
+
+    # Publish the project to a local folder
+    - name: Publish app
+      run: dotnet publish -c Release -o ./publish
+
+    # Authenticate to Azure using a service principal
+    - name: Login to Azure using service principal
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Deploy the published app to Azure Web App
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: taskmanagement-api-development  # Azure Web App name
+        package: ./publish        # Path to published output

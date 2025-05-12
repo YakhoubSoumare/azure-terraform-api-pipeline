@@ -47,5 +47,5 @@ jobs:
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: taskmanagement  # Azure Web App name
+        app-name: taskmanagement-api-development  # Azure Web App name
         package: ./publish        # Path to published output

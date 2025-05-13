@@ -64,3 +64,9 @@ variable "app_service_plan_sku_size" {
   description = "SKU size for App Service Plan"
   default     = "F1"
 }
+
+variable "connection_string_value" {
+  type        = string
+  description = "Connection string for the App Service"
+  sensitive   = true
+}

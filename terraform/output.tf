@@ -34,12 +34,6 @@ output "sql_connection_string" {
   sensitive = true
 }
 
-output "web_app_url" {
-  value = azurerm_windows_web_app.web_app.default_hostname
-  description = "The default URL of the deployed web app"
-}
-
-
 # Sensitive outputs: admin username, password, connection string, and web app url.
 # These values are required for application configuration and are built or retrieved from Terraform-managed resources.
 # Use the command `terraform output <name>` to retrieve them after `terraform apply`.

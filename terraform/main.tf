@@ -73,3 +73,36 @@ resource "azurerm_mssql_database" "db"{
 
   tags = {}
 }
+
+resource "azurerm_service_plan" "asp" {
+  name                = "asp-${var.environment}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  sku_name = var.app_service_plan_sku_size
+
+  os_type             = "Windows"  # Defines it as Windows-based
+}
+
+resource "azurerm_windows_web_app" "web_app" {
+  name                = "taskmanagement-api-${var.environment}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  service_plan_id = azurerm_service_plan.asp.id
+
+  site_config {
+    always_on = false  # Explicitly disable "Always On"
+  }
+
+  app_settings = {
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
+  }
+
+  connection_string {
+    name  = "AzureConnection"
+    type  = "SQLAzure"
+    value = var.connection_string_value
+  }
+
+  https_only = true
+}

@@ -52,21 +52,3 @@ variable "sql_db_name" {
   type        = string
   description = "The name of the SQL Database."
 }
-
-variable "dotnet_version" {
-  type        = string
-  description = "The .NET version to run in App Service"
-  default     = "v6.0"
-}
-
-variable "app_service_plan_sku_size" {
-  type        = string
-  description = "SKU size for App Service Plan"
-  default     = "F1"
-}
-
-variable "connection_string_value" {
-  type        = string
-  description = "Connection string for the App Service"
-  sensitive   = true
-}
